@@ -29,7 +29,10 @@ const userSchema = new mongoose.Schema({
   role:{
     type:String,
     default: 'user',
-  }
+  },
+  followers:[{
+    type:String,
+}]
 })
 
 userSchema.statics.signup=async function( userName,firstName,lastName,password)

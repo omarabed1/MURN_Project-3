@@ -26,8 +26,9 @@ const TripDetails = ({trip})=>{
   const [toDate,setToDate] = useState(momentToDate)
   const {deleteTrip}=useDeleteTrip()
     const handleClick = async () => {
-      deleteTrip(trip._id)
+      deleteTrip(trip._id,trip.location)
       }
+      
       function openModal() {
         setIsOpen(true);
       }    
@@ -38,9 +39,10 @@ const TripDetails = ({trip})=>{
         const response = await  fetch('/api/trip/' + trip._id, {
           method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({picture,location,description}),
+          body: JSON.stringify({picture,location,description,price,fromDate,toDate}),
         })
         const json = await response.json()
+        
         if (response.ok) {
           console.log(json)
           setIsOpen(false);
@@ -55,14 +57,16 @@ const TripDetails = ({trip})=>{
 
         <div className="card">
             <h1>{trip.location}</h1>
-            <img className='visual' src={trip.picture}/>
+            <img className='visual' src={trip.picture} alt={trip.location}/>
             <p><strong>description : </strong>{trip.description}</p>
             <p><strong>Price : </strong>{trip.price}$</p>
             <p>{formatDistanceToNow(new Date(trip.createdAt), { addSuffix: true })}</p>
             <p>from :{momentFromDate}to:{momentToDate}</p>
+            <div className='buttons'>
+                     <button onClick={handleClick}>delete</button>
+            <button onClick={openModal}>edit</button>     
+            </div>
 
-            <button onClick={handleClick}>delete</button>
-            <button onClick={openModal}>edit</button>
             </div>
       <Modal
         isOpen={modalIsOpen}

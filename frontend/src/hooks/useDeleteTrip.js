@@ -6,7 +6,7 @@ export const useDeleteTrip=()=>{
     const {dispatch}=useTripContext()
     const {user}=useUserContext()
 
-    const deleteTrip =async (id)=>{
+    const deleteTrip =async (id,location)=>{
         if(!user){
             return
         }
@@ -16,9 +16,12 @@ export const useDeleteTrip=()=>{
               'Authorization': `Bearer ${user.token}`
             }
           })
+          const response1 = await fetch('/api/follow/' + location, {
+            method: 'DELETE',
+          })
           const json = await response.json()
       
-          if (response.ok) {
+          if (response.ok&&response1.ok) {
             dispatch({type: 'DELETE_TRIP', payload: json})
           }
     }

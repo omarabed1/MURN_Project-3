@@ -17,6 +17,11 @@ export const useAddTrip= ()=>{
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ description,location,picture, price,fromDate,toDate })
         })
+        const response1 =await fetch ('/api/follow/create',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({location})
+        })
         const json =await response.json()
 
         if(!response.ok){
@@ -24,13 +29,15 @@ export const useAddTrip= ()=>{
             setEmptyFields(json.emptyFields)
             setIsloading(false)
         }
-        if(response.ok){
+        if(response.ok &&response1.ok){
             setError(null)
             setIsloading(false)
             setEmptyFields([])
             console.log('add new Trip',json);
             dispatch({type:'CREATE_TRIP',payload:json})
         }
+
+
     }
     return{addTrip,error,isloading,emptyFields}
 }

@@ -4,6 +4,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import {useUserContext} from './hooks/useUserContext'
 import Navbar from './components/Navbar';
+import Graph from './pages/Graph';
 function App() {
   const { user } = useUserContext()
   return (
@@ -23,6 +24,10 @@ function App() {
           <Route
             path='/signup'
             element={!user? <Signup />: <Navigate to ="/"/>}
+          />
+          <Route
+           path='/graph'
+           element={user? <Graph/> : <Navigate to ="/login"/> }
           />
         </Routes>
         </div>

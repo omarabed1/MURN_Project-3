@@ -24,10 +24,6 @@ const tripSchema = new mongoose.Schema({
     toDate:{
         type:Date,
         required: true
-    },
-    followers:{
-        type:Number,
-        default:0
     }
 },{ timestamps: true })
 

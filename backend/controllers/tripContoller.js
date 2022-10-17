@@ -26,13 +26,12 @@ const createtrip = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const trip = await Trip.create({picture,location,price,description,fromDate,toDate,followers})
+        const trip = await Trip.create({picture,location,price,description,fromDate,toDate})
         res.status(200).json(trip)
     } catch (error) {
         res.status(400).json({error:error.message})
     }
 }
-
 const gettrip = async (req, res) => {
     try {
         const trips = await Trip.find({}).sort({createdAt: -1})
@@ -41,7 +40,6 @@ const gettrip = async (req, res) => {
         res.status(400).json({error:error.message})
     }
 }
-
 const deletetrip = async (req, res) => {
     const {_id}= req.params
     if(!mongoose.Types.ObjectId.isValid(_id)){
